@@ -10,6 +10,12 @@ module PornArchiver::Extractor
       @user ||= "generic"
     end
 
+    def start
+      if @url.to_s =~ /\.png|\.jpg/
+        download_image(@url, "archive/#{@user}/#{@parent_extractor}")
+      end
+    end
+
     def download_image(image : URI, path : String)
       FileUtils.mkdir_p(path)
 

@@ -21,8 +21,9 @@ module PornArchiver::Extractor
     end
 
     def start
-      case @url.to_s
-      when .includes? "/user/"
+      return if super
+
+      if @url.to_s.includes? "/user/"
         return unless @user
 
         @@client.get_submitted(@user.to_s).each do |post|
@@ -31,8 +32,6 @@ module PornArchiver::Extractor
           next unless f
           f.start
         end
-      when .includes?(".png"), .includes?(".jpg")
-        download_image(@url, "archive/#{@user}/#{@parent_extractor}")
       end
     end
   end

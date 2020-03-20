@@ -14,11 +14,7 @@ module PornArchiver::Extractor
     end
 
     def start
-      case @url.to_s
-      when .includes?(".png"),
-           .includes?(".jpg")
-        download_image(@url, "archive/#{@user}/#{@parent_extractor}")
-      end
+      return if super
     end
   end
 end
