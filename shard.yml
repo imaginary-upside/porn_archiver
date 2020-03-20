@@ -1,0 +1,13 @@
+name: porn_archiver
+version: 0.1.0
+
+authors:
+  - imaginary-upside <imaginary-upside@protonmail.ch>
+
+targets:
+  porn_archiver:
+    main: src/porn_archiver.cr
+
+crystal: 0.33.0
+
+license: AGPL-3.0-only
