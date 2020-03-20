@@ -26,9 +26,13 @@ module PornArchiver::Extractor
       if @url.to_s.includes? "/user/"
         return unless @user
 
-        @@client.get_submitted(@user.to_s).each do |post|
+        @@client.get_submitted(@user.to_s) do |post|
           next unless post["kind"].to_s == Api::Reddit::LINK_TYPE
-          f = Extractor.factory(post["data"]["url"].to_s, @user, @parent_extractor)
+          f = Extractor.factory(
+            post["data"]["url"].to_s,
+            @user,
+            @parent_extractor
+          )
           next unless f
           f.start
         end

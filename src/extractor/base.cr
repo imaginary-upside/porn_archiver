@@ -23,6 +23,7 @@ module PornArchiver::Extractor
       return if File.exists? dest
 
       HTTP::Client.get(image) do |r|
+        return unless r.success?
         File.write(dest, r.body_io)
       end
     end

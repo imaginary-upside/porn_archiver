@@ -27,10 +27,24 @@ module PornArchiver::Api
       end
     end
 
-    def get_submitted(username : String, offset = Nil)
-      r = @client.get "/user/#{username}/submitted"
-      data = JSON.parse r.body
-      data["data"]["children"].as_a
+    def get_submitted(username : String)
+      offset = ""
+
+      loop do
+        params = HTTP::Params.encode({
+          "after" => offset,
+          "limit" => "100"
+        })
+        r = @client.get "/user/#{username}/submitted?#{params}"
+        data = JSON.parse r.body
+
+        posts = data["data"]["children"].as_a
+        posts.each { |post| yield post }
+
+        break unless posts.size == 100
+
+        offset = posts[-1]["data"]["name"].to_s
+      end
     end
   end
 end
